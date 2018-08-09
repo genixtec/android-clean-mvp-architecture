@@ -1,6 +1,5 @@
-package aptus.architecture.rx
+package com.genix.architecture.rx
 
-import com.genix.architecture.rx.SchedulerProvider
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.TestScheduler
 

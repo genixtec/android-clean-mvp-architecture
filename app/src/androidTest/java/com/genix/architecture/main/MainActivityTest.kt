@@ -1,4 +1,4 @@
-package aptus.architecture.main
+package com.genix.architecture.main
 
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
@@ -12,8 +12,7 @@ import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
-import aptus.architecture.R
-import com.genix.architecture.main.MainActivity
+import com.genix.architecture.R
 
 
 @RunWith(AndroidJUnit4::class)

@@ -1,10 +1,7 @@
-package aptus.architecture.main
+package com.genix.architecture.main
 
 import com.genix.architecture.ApiService
-import aptus.architecture.rx.TestSchedulerProvider
-import com.genix.architecture.main.MainPresenter
-import com.genix.architecture.main.MainPresenterImpl
-import com.genix.architecture.main.MainView
+import com.genix.architecture.rx.TestSchedulerProvider
 import com.genix.architecture.vo.Post
 import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
