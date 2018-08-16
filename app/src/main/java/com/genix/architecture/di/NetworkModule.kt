@@ -2,6 +2,7 @@ package com.genix.architecture.di
 
 import android.content.Context
 import com.genix.architecture.ApiService
+import com.genix.architecture.BuildConfig
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -11,11 +12,14 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import okhttp3.logging.HttpLoggingInterceptor
+
 
 @Module
 class NetworkModule {
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     fun provideOkHttpClient(context: Context): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor { chain ->
@@ -24,6 +28,12 @@ class NetworkModule {
             requestBuilder.header("Content-Type", "application/json")
             requestBuilder.method(original.method(), original.body())
             chain.proceed(requestBuilder.build())
+        }
+        if (BuildConfig.DEBUG) {
+            val logging = HttpLoggingInterceptor()
+            // set your desired log level
+            logging.level = HttpLoggingInterceptor.Level.BODY
+            httpClient.addInterceptor(logging)
         }
         httpClient.connectTimeout(30, TimeUnit.SECONDS)
         httpClient.readTimeout(60, TimeUnit.SECONDS)
@@ -35,7 +45,8 @@ class NetworkModule {
         return httpClient.build()
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
             .baseUrl("https://jsonplaceholder.typicode.com/")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -43,7 +54,8 @@ class NetworkModule {
             .client(client)
             .build()
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     fun providesNetworkService(retrofit: Retrofit): ApiService = retrofit
             .create(ApiService::class.java)
 
